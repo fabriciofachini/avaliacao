@@ -3,8 +3,19 @@ import { FaEdit, FaWindowClose, FaSignOutAlt } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import { Cliente } from '../../interfaces/cliente';
-import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import { Button, IconButton, Paper, Table, TableCell, TableContainer, TableRow, TableHead, TableBody} from '@material-ui/core';
+import { withStyles, createStyles, makeStyles } from '@material-ui/styles';
+import {
+  Button,
+  IconButton,
+  Paper,
+  Table,
+  TableCell,
+  TableContainer,
+  TableRow,
+  TableHead,
+  TableBody,
+  Theme
+} from '@material-ui/core';
 import { useAuth } from '../../context/auth';
 
 const ClientePage: React.FC = () => {
@@ -45,18 +56,19 @@ const ClientePage: React.FC = () => {
   const [clients, setClients] = useState<Cliente[]>([]);
 
   useEffect(() => {
-    api.get<Cliente[]>('/cliente').subscribe((response) => {
+    api.get<Cliente[]>('/v1/cliente').subscribe((response) => {
+        console.log(response);
       setClients(response);
     });
   },[loading]);
 
   const edit = (client: Cliente) => {
-    history.push('/cliente/' + client.idCliente);
+    history.push('/cliente/' + client.id);
   };
 
   const remove = (client: Cliente) => {
     setLoading(true);
-    api.delete<Cliente>('/cliente', client.idCliente).subscribe((response) => {
+    api.delete<Cliente>('/v1/cliente', client.id).subscribe((response) => {
       setLoading(false);
     });
   };
@@ -97,9 +109,9 @@ const ClientePage: React.FC = () => {
               </TableHead>
               <TableBody>
                 {clients.map((client) => {
-                  return <StyledTableRow key={client.idCliente}>
+                  return <StyledTableRow key={client.id}>
                     <StyledTableCell component="th" scope="row">
-                      {client.idCliente}
+                      {client.id}
                     </StyledTableCell>
                     <StyledTableCell align="right">{client.nome}</StyledTableCell>
                     <StyledTableCell align="right">{client.cpf}</StyledTableCell>
@@ -113,12 +125,12 @@ const ClientePage: React.FC = () => {
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {client.emails.map((value) => {
-                        return <div key={value.id}>{value.dsEmail}</div>
+                        return <div key={value.id}>{value.email}</div>
                       })}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {client.telefones.map((value) => {
-                        return <div key={value.id}>{value.numero}</div>
+                        return <div key={value.id}>{value.telefone}</div>
                       })}
                     </StyledTableCell>
                     <StyledTableCell align="right">

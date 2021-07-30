@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './style.scss';
 import { useAuth } from '../../context/auth';
 import { Redirect } from 'react-router';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Button, Card, CardContent, Backdrop, IconButton, CircularProgress, Snackbar } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/styles';
+import { Button, Card, CardContent, Backdrop, IconButton, CircularProgress, Snackbar, Theme } from '@material-ui/core';
 import { Form } from 'react-bootstrap';
 
 const LoginPage: React.FC = () => {

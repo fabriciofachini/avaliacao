@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import api from '../services/api';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, mergeMap } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
 import { AuthContextData } from '../interfaces/auth';
 import { Usuario } from '../interfaces/usuario';
@@ -13,8 +13,8 @@ const AuthProvider: React.FC = ({ children }) => {
     if (stringUser) {
       const storagedUser: Usuario = JSON.parse(stringUser);
       setUser(storagedUser);
-      setAdmin(storagedUser.perfil.authority === 'ROLE_ADMIN');
-      api.axiosInstance.defaults.headers.Authorization = 'Bearer ' + storagedUser.access_token;
+      setAdmin(storagedUser.perfil.codigo === 'AD');
+      api.axiosInstance.defaults.headers.Authorization = 'Bearer ' + storagedUser.accessToken;
     }
     setLoading(false);
   }, []);
@@ -23,15 +23,15 @@ const AuthProvider: React.FC = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
 
-  const signIn = (username: string, password: string) => {
-    return api.post<Usuario>('/auth/login', {
+  const signIn = (username: string, senha: string) => {
+    return api.post<Usuario>('/login', {
       username,
-      password
+      senha
     }).pipe(
       mergeMap((response) => {
         setUser(response);
-        setAdmin(response.perfil.authority === 'ROLE_ADMIN');
-        api.axiosInstance.defaults.headers.Authorization = 'Bearer ' + response?.access_token;
+        setAdmin(response.perfil.codigo === 'AD');
+        api.axiosInstance.defaults.headers.Authorization = 'Bearer ' + response?.accessToken;
         localStorage.setItem('user', JSON.stringify(response));
         return of(response);
       }),

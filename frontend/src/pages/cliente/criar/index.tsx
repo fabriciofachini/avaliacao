@@ -4,13 +4,14 @@ import { Cliente } from '../../../interfaces/cliente';
 import { Cep } from '../../../interfaces/cep';
 import { useFormik, FormikProvider } from 'formik';
 import * as Yup from 'yup';
-import { Button, createStyles, makeStyles, TextField, TextFieldProps, Theme, Backdrop, CircularProgress } from '@material-ui/core';
+import { Button, createStyles, TextField, TextFieldProps, Theme, Backdrop, CircularProgress } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import InputMask, {Props} from 'react-input-mask';
 import api from '../../../services/api';
 import './loading.scss';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Email } from '../../../interfaces/email';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { ModalEmail } from './modals/modal-email';
 import { FaTrash } from 'react-icons/fa';
 import { Telefone } from '../../../interfaces/telefone';
@@ -26,10 +27,12 @@ const CriarClientePage: React.FC = () => {
   const [telefoneList, setTelefoneList] = useState<Array<Telefone>>([]);
   const history = useHistory();
 
+  const [x, setX] = useState('ola');
+
   const formik = useFormik({
     initialValues: cliente,
     validationSchema: Yup.object({
-      idCliente: Yup.number(),
+      id: Yup.number(),
       nome: Yup.string()
         .max(100, 'Nome deve conter até de 100 caracteres')
         .min(3, 'Nome deve conter pelo menos 3 caracteres')
@@ -62,9 +65,9 @@ const CriarClientePage: React.FC = () => {
         emails: mailList
       };
 
-      let obs = api.post<Cliente>('/cliente', cliente);
-      if (values.idCliente) {
-        obs = api.put<Cliente>('/cliente/' + values.idCliente, cliente);
+      let obs = api.post<Cliente>('/v1/cliente', cliente);
+      if (values.id) {
+        obs = api.put<Cliente>('/v1/cliente/' + values.id, cliente);
       }
       obs.subscribe(() => {
             setLoading(false);
@@ -79,7 +82,7 @@ const CriarClientePage: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      api.get<Cliente>('/cliente/' + id).subscribe((response) => {
+      api.get<Cliente>('/v1/cliente/' + id).subscribe((response) => {
         if (response) {
           setCliente(response);
           formik.setValues(response);
@@ -94,7 +97,7 @@ const CriarClientePage: React.FC = () => {
     const cep = event.target.value.replace(/\D/g, '');
     if (cep.length === 8) {
       setLoading(true);
-      api.get<Cep>('/cep/' + cep).subscribe((data) => {
+      api.get<Cep>('/v1/cep/' + cep).subscribe((data) => {
         if (data && Object.keys(data).length > 0) {
           formik.setFieldValue('bairro', data.bairro, true);
           formik.setFieldValue('logradouro', data.logradouro, true);
@@ -123,12 +126,12 @@ const CriarClientePage: React.FC = () => {
     }),
   );
 
-  const classes = useStyles();
+  const classes: any = useStyles();
 
   const removerEmail = (id: number | undefined, index: number) => {
     mailList.splice(index, 1);
     if (id) {
-      api.delete('/cliente/email', id).subscribe();
+      api.delete('/v1/cliente/email', id).subscribe();
       setMailList(mailList);
     }
   };
@@ -136,7 +139,7 @@ const CriarClientePage: React.FC = () => {
   const removerTelefone = (id: number | undefined, index: number) => {
     telefoneList.splice(index, 1);
     if (id) {
-      api.delete('/cliente/telefone', id).subscribe();
+      api.delete('/v1/cliente/telefone', id).subscribe();
       console.log(telefoneList);
       setTelefoneList(telefoneList);
     }
@@ -144,6 +147,7 @@ const CriarClientePage: React.FC = () => {
 
   return (
     <div style={{padding: 50}}>
+        {x}
       <FormikProvider value={formik}>
         <form onSubmit={formik.handleSubmit}>
           <TextField
@@ -270,13 +274,14 @@ const CriarClientePage: React.FC = () => {
           {
             mailList.map((email, index) => {
               return <div className={classes.info} style={{position: 'relative'}} key={index}>
-                {email.dsEmail}
+                {email.email}
                 <Button type="button" style={{position: 'absolute', right: '-10px'}}
                         onClick={() => removerEmail(email.id, index)}><FaTrash/></Button>
               </div>
             })
           }
           <Button color="primary" type="button" variant="contained" onClick={() => {
+              setX('asdasd');
             setIsOpen(true);
           }} style={{margin: 10}}>
             Adicionar email
@@ -285,7 +290,7 @@ const CriarClientePage: React.FC = () => {
           <ModalEmail isOpen={isOpen} confirm={(value: string) => {
             setIsOpen(false);
             mailList.push({
-              dsEmail: value
+              email: value
             });
             setMailList(mailList);
           }}/>
@@ -293,7 +298,7 @@ const CriarClientePage: React.FC = () => {
           {
             telefoneList.map((telefone, index) => {
               return <div className={classes.info} style={{position: 'relative'}} key={index}>
-                {telefone.numero} ({telefone.tipo === 'RE' ? 'Residencial' : telefone.tipo === 'CO' ? 'Comercial' : 'Celular'})
+                {telefone.telefone} ({telefone.tipo === 'RE' ? 'Residencial' : telefone.tipo === 'CO' ? 'Comercial' : 'Celular'})
                 <Button type="button" style={{position: 'absolute', right: '-10px'}}
                         onClick={() => removerTelefone(telefone.id, index)}><FaTrash/></Button>
               </div>

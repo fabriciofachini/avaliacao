@@ -2,7 +2,7 @@ import { Telefone } from './telefone';
 import { Email } from './email';
 
 export interface Cliente {
-  idCliente: number;
+  id: number;
   nome: string;
   cpf: string;
   cep: string;

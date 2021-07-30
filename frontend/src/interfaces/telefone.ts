@@ -2,7 +2,7 @@ import { Cliente } from './cliente';
 
 export interface Telefone {
   id: number;
-  numero: string;
+  telefone: string;
   tipo: string;
   cliente: Cliente;
 }

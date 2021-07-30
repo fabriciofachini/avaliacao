@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { createStyles, makeStyles, Theme, Button, Modal, TextField, TextFieldProps, Select, MenuItem } from '@material-ui/core';
+import { createStyles, Theme, Button, Modal, TextField, TextFieldProps, Select, MenuItem } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import InputMask, {Props} from 'react-input-mask';
 
@@ -42,7 +43,7 @@ export const ModalTelefone = (props: any) => {
   );
 
   const [modalStyle] = React.useState(getModalStyle);
-  const classes = useStyles();
+  const classes: any = useStyles();
 
   const click = ()=> {
     props.confirm({

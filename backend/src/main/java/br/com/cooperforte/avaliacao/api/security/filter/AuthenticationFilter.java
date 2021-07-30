@@ -79,7 +79,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		String token = Jwts.builder().setSubject(mapper.writeValueAsString(login))
 				.signWith(SignatureAlgorithm.HS512, AUTH_SECRET).setExpiration(expTime).compact();
 
-		response.addHeader("Authorization", "Bearer " + token);
+		login.setAccessToken(token);
+
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
 		response.getWriter().write(mapper.writeValueAsString(login));

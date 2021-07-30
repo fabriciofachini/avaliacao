@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { createStyles, makeStyles, Theme, Button, Modal, TextField, TextFieldProps } from '@material-ui/core';
+import { createStyles, Theme, Button, Modal, TextField, TextFieldProps } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 
 export const ModalEmail = (props: any) => {
@@ -40,7 +41,7 @@ export const ModalEmail = (props: any) => {
   );
 
   const [modalStyle] = React.useState(getModalStyle);
-  const classes = useStyles();
+  const classes: any = useStyles();
 
   const click = ()=> {
     props.confirm(value);

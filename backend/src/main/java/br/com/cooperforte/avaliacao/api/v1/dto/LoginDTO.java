@@ -17,6 +17,8 @@ public class LoginDTO {
 
 	private String nome;
 
+	private String accessToken;
+
 	private Perfil perfil;
 
 }

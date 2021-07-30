@@ -7,9 +7,9 @@
     "@emotion/styled": "^11.0.0",
     "@material-ui/core": "^5.0.0-alpha.17",
     "@material-ui/styles": "^4.11.1",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
     "@types/jest": "^26.0.15",
     "@types/material-ui": "^0.21.8",
     "@types/node": "^12.0.0",
@@ -23,17 +23,18 @@
     "bootstrap": "^4.5.3",
     "formik": "^2.2.5",
     "node-sass": "^4.14.1",
-    "react": "^17.0.1",
+    "react": "^17.0.2",
     "react-bootstrap": "^1.4.0",
-    "react-dom": "^17.0.1",
+    "react-dom": "^17.0.2",
     "react-hook-form": "^6.11.5",
     "react-icons": "^3.11.0",
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
+    "react-scripts": "4.0.3",
     "react-text-mask": "^5.4.3",
     "rxjs": "^6.6.3",
-    "web-vitals": "^0.2.4",
+    "typescript": "^4.3.5",
+    "web-vitals": "^1.1.2",
     "yup": "^0.31.0"
   },
   "scripts": {
@@ -48,10 +49,6 @@
       "react-app/jest"
     ]
   },
-  "eslintIgnore": [
-    "node_modules",
-    "build/*"
-  ],
   "browserslist": {
     "production": [
       ">0.2%",
@@ -63,10 +60,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.28.5",
-    "@typescript-eslint/parser": "^4.28.5",
-    "typescript": "^4.3.5"
   }
 }
