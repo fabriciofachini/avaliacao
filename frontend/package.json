@@ -33,7 +33,6 @@
     "react-scripts": "4.0.1",
     "react-text-mask": "^5.4.3",
     "rxjs": "^6.6.3",
-    "typescript": "^4.0.3",
     "web-vitals": "^0.2.4",
     "yup": "^0.31.0"
   },
@@ -49,6 +48,10 @@
       "react-app/jest"
     ]
   },
+  "eslintIgnore": [
+    "node_modules",
+    "build/*"
+  ],
   "browserslist": {
     "production": [
       ">0.2%",
@@ -60,5 +63,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
+    "typescript": "^4.3.5"
   }
 }
