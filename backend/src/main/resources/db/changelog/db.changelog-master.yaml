@@ -1,0 +1,7 @@
+databaseChangeLog:
+
+  - include:
+      file: db/scripts/v1.0.0.sql
+
+  - include:
+      file: db/scripts/v1.0.0-insert-usuario.sql
