@@ -72,7 +72,7 @@ public class ClienteController extends AbstractController {
 
 		clienteService.removerTelefone(id);
 
-		return RespostaBuilder.getBuilder().mensagem("Cliente excluído com sucesso.").build();
+		return RespostaBuilder.getBuilder().mensagem("Telefone excluído com sucesso.").build();
 	}
 
 	@ApiOperation(value = "Exclusão de cliente", notes = "")
@@ -83,7 +83,7 @@ public class ClienteController extends AbstractController {
 
 		clienteService.removerEmail(id);
 
-		return RespostaBuilder.getBuilder().mensagem("Cliente excluído com sucesso.").build();
+		return RespostaBuilder.getBuilder().mensagem("E-mail excluído com sucesso.").build();
 	}
 
 	@ApiOperation(value = "Recupera todos clientes", notes = "")
